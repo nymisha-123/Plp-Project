@@ -1,0 +1,133 @@
+<template>
+    
+      
+    <template for:each={order} for:item='e' for:index="i" > 
+        
+      
+        
+        <lightning-card key={e} title={e.Name} width="50%">
+            
+            
+            <div class="slds-text-heading_large"><center><b>Order Summary <c-index-list index={i}></c-index-list></b></center><br></div>
+            <div class="slds-text-heading_medium"><center><b>Order of {e.Name}</b></center><br></div> 
+            <hr>
+            <div class="slds-text-heading_medium">&nbsp;&nbsp;&nbsp;<b>Order Name</b>&nbsp;&nbsp;:   {e.Name}<br></div> 
+            <div class="slds-text-heading_medium">&nbsp;&nbsp;&nbsp;<b>Order Id</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:     {e.Id}<br></div> 
+            <div class="slds-text-heading_medium">&nbsp;&nbsp;&nbsp;<b>Account Id</b>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:  {e.AccountId}<br></div> 
+            <div class="slds-text-heading_medium">&nbsp;&nbsp;&nbsp;<b>Total Amount</b>: {e.TotalAmount}<br></div> 
+            <hr>
+        
+            <div class="slds-text-heading_medium"><center><b>Order Line Items!!</b></center><br></div> 
+            <hr>
+         
+            
+                <table>
+                    <thead>
+                       <tr class="slds-line-height_reset">
+                          <th class="" scope="col">
+                             <div class="slds-truncate" title="Product Name">&nbsp;Product Name</div>
+                          </th>
+                          <th class="" scope="col">
+                             <div class="slds-truncate" title="Family">&nbsp;Product Code</div>
+                          </th>
+                          <th class="" scope="col">
+                             <div class="slds-truncate" title="Code">&nbsp;Quanity</div>
+                          </th>
+                          <th class="" scope="col">
+                             <div class="slds-truncate" title="Email">&nbsp;UnitPrice</div>
+                          </th>
+                          <th class="" scope="col">
+                              <div class="slds-truncate" title="Email">&nbsp;TotalPrice</div>
+                          </th>
+                       </tr>
+                    </thead>
+                    
+                    <tbody>
+                       <!--iterate all contact records using for-each iteration -->    
+                       <template for:each={e.OrderItems} for:item='c' for:index="x">
+               
+                          <tr class="slds-hint-parent" key={c.Name}>
+                             <td>
+                                <div class="slds-truncate">&nbsp;&nbsp;{c.Product_Name__c}</div>
+                             </td>
+                             <td>
+                                <div class="slds-truncate">&nbsp;&nbsp;{c.Product_Code__c}</div>
+                             </td>
+                             <td>
+                                <div class="slds-truncate">
+                                    &nbsp;&nbsp;{c.Quantity__c} 
+                                </div>
+                             </td>
+                             <td>
+                                <div class="slds-truncate">
+                                    &nbsp;&nbsp;{c.UnitPrice} 
+                                  
+                                </div>
+                             </td>
+                             <td>
+                              <div class="slds-truncate">   {c.TotalPrice} </div>
+                           </td>
+                           <td>
+                           <div><lightning-button label="edit" variant="brand" icon-name="action:update" onclick={edit}  name={i} value={x} ></lightning-button>
+                            &nbsp;&nbsp;
+                            <lightning-button label="delete" variant="destructive" icon-name="action:delete" onclick={dele} name={i} value={x}></lightning-button>
+                          
+                            
+                         </div>
+                         </td>
+                          </tr>
+                          
+                          
+                       </template>
+                       
+                       
+                    </tbody>
+                   
+                 </table>
+            
+           
+            <div slot="footer"  >
+          
+                 <lightning-button label="Confirm Order"  variant="success" icon-name="action:submit_for_approval" onclick={conf} value={i}></lightning-button>
+                &nbsp;&nbsp; <lightning-button label="Cancel" variant="destructive" icon-name="action:delete" onclick={del}  value={i}></lightning-button>
+                  
+               
+            </div>
+            
+            
+           
+        </lightning-card>  <br key={e}><br key={e}><br key={e}>
+    </template>
+    <template if:true={open}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- modal header start -->
+                <header class="slds-modal__header">
+                 
+                   <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Employee</h2>
+                </header>
+         
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-record-edit-form object-api-name={accountObject} record-id={recordId} mode="edit"
+                layout-type="Compact" onsuccess={handleSuccess}>
+                    <lightning-messages>
+                    </lightning-messages>
+                    <lightning-input-field field-name="Quantity" value={quan}>
+                    </lightning-input-field>
+                    <lightning-input-field field-name="OrderId" value={oid} readonly={a}>
+                    </lightning-input-field>
+                    <lightning-input-field field-name="UnitPrice" value={up} readonly={a}>
+                    </lightning-input-field>
+                    <lightning-input-field field-name="PricebookEntryId" value={id} readonly={a}>
+                    </lightning-input-field>
+                    <lightning-button type="submit" label="Update product"  ></lightning-button>
+                    <lightning-button type="cancel" label="cancel" onclick={can}  ></lightning-button>
+               
+                </lightning-record-edit-form>
+            
+        </div></div>
+        </section>
+     </template>
+     
+  
+</template>

@@ -1,0 +1,128 @@
+<template>
+    <div class="slds-m-around_medium">
+      
+      <div class="slds-m-bottom_medium">
+          <lightning-input type="search"
+             value={sVal}
+             label="Product Name"
+             onchange={updateSeachKey}
+             placeholder="Enter Product Name to be searched"
+             style="width: 400px;"
+             ></lightning-input>
+             <lightning-input type="search"
+             value={sVal1}
+             label="Product Brand"
+             onchange={updateSeach}
+             placeholder="Enter Brand Name to be searched"
+             style="width: 400px;"
+             ></lightning-input>
+             <lightning-input type="search"
+             value={sVal2}
+             label="Product Price"
+             onchange={updateSea}
+             placeholder="Enter Mrp"
+             style="width: 400px;"
+             ></lightning-input>
+       </div>
+       
+       <!-- <lightning-button label="Search"
+          onclick={handleSearch}
+          variant="brand"></lightning-button> -->
+          <lightning-button label="Clear" onclick={clear} ></lightning-button>
+          
+       <!-- custom data table(with SLDS style) to display contact list  -->  
+       <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+          <thead>
+             <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                   <div class="slds-truncate" title="Product Name">Product Name</div>
+                </th>
+                <th class="" scope="col">
+                   <div class="slds-truncate" title="Family">Product Code</div>
+                </th>
+                <th class="" scope="col">
+                   <div class="slds-truncate" title="Code">UnitPrice</div>
+                </th>
+                <th class="" scope="col">
+                   <div class="slds-truncate" title="Email">Price Book Name</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Email">Brand</div>
+                 </th>
+                 <th class="" scope="col">
+                  <div class="slds-truncate" title="Email">Save</div>
+               </th>
+             </tr>
+          </thead>
+          
+          <tbody>
+             <!--iterate all contact records using for-each iteration -->    
+             <template for:each={order} for:item='e' for:index="i">
+                <tr class="slds-hint-parent" key={e.Name}>
+                   <td>
+                      <div class="slds-truncate">{e.Product_Name__c}</div>
+                   </td>
+                   <td>
+                      <div class="slds-truncate">{e.ProductCode}</div>
+                   </td>
+                   <td>
+                      <div class="slds-truncate">
+                        {e.UnitPrice} 
+                      </div>
+                   </td>
+                   <td>
+                      <div class="slds-truncate">
+                         {e.PBName__c} 
+                        
+                      </div>
+                   </td>
+                   <td>
+                    <div class="slds-truncate">{e.Brand__c}</div>
+                 </td>
+                 <td>
+                 <div><lightning-button label="Add"  icon-name="custom:custom93" onclick={edit} value={i}></lightning-button>
+                
+                  
+               </div>
+               </td>
+                </tr>
+                
+                
+             </template>
+             <template if:true={open}>
+               <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                   <div class="slds-modal__container">
+                       <!-- modal header start -->
+                       <header class="slds-modal__header">
+                        
+                          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Products</h2>
+                       </header>
+                
+                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                     <lightning-record-edit-form object-api-name={accountObject} onsuccess={handleSuccess}>
+                        <lightning-messages>
+                        </lightning-messages>
+                        <lightning-input-field field-name="Quantity" >
+                        </lightning-input-field>
+                        <lightning-input-field field-name="OrderId" value={recordId} >
+                        </lightning-input-field>
+                        <lightning-input-field field-name="UnitPrice" value={up}>
+                        </lightning-input-field>
+                        <lightning-input-field field-name="PricebookEntryId" value={id}>
+                        </lightning-input-field>
+                        <lightning-button type="submit"  variant="success"  label="Add product"  ></lightning-button>
+                        <lightning-button type="Cancel"  variant="destructive" label="cancel" onclick={cancel} ></lightning-button>
+                        <lightning-button label="New" onclick={news} ></lightning-button>
+                    </lightning-record-edit-form>
+                
+               </div></div>
+               </section>
+            </template>
+             
+          </tbody>
+         
+       </table>
+    </div>
+  
+ </template>
+ 

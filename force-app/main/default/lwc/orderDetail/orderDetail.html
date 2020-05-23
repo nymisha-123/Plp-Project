@@ -1,0 +1,56 @@
+<template>
+    
+    <template for:each={order} for:item='e' for:index="i">
+        
+       
+        <lightning-card key={e} title={e.OrderId}>
+            <h1>Order Summary</h1>
+            <h3>Order Line Items</h3>
+            {e.OrderId}
+            {e.Stock_Quantity__c}
+            {e.Amount__c}
+            <h3>Order Items</h3>
+            {e.Product_Code__c}
+            {e.Product_Name__c}
+            {e.UnitPrice}
+            {e.TotalPrice}
+
+            <lightning-button label="edit" onclick={edit} value={i}></lightning-button>
+            <lightning-button label="delete" onclick={dele} value={i}></lightning-button>
+           
+        </lightning-card>
+        
+    </template>
+    <template if:true={open}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- modal header start -->
+                <header class="slds-modal__header">
+                 
+                   <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Employee</h2>
+                </header>
+         
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-record-edit-form object-api-name={accountObject} record-id={recordId} mode="edit"
+                layout-type="Compact" onsuccess={handleSuccess}>
+                    <lightning-messages>
+                    </lightning-messages>
+                    <lightning-input-field field-name="Quantity" value={quan}>
+                    </lightning-input-field>
+                    <lightning-input-field field-name="OrderId" value={oid} readonly={x}>
+                    </lightning-input-field>
+                    <lightning-input-field field-name="UnitPrice" value={up} readonly={x}>
+                    </lightning-input-field>
+                    <lightning-input-field field-name="PricebookEntryId" value={id} readonly={x}>
+                    </lightning-input-field>
+                    <lightning-button type="submit" label="Update product"  ></lightning-button>
+                    <lightning-button type="cancel" label="cancel" onclick={can}  ></lightning-button>
+               
+                </lightning-record-edit-form>
+            
+        </div></div>
+        </section>
+     </template>
+     
+    
+</template>
